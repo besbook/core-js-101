@@ -97,8 +97,8 @@ function getFirstChar(value) {
  *   'cat'              => 'cat'
  *   '\tHello, World! ' => 'Hello, World!'
  */
-function removeLeadingAndTrailingWhitespaces(/* value */) {
-  throw new Error('Not implemented');
+function removeLeadingAndTrailingWhitespaces(value) {
+  return value.replace(/\t/, '').trim();
 }
 
 /**
@@ -112,8 +112,8 @@ function removeLeadingAndTrailingWhitespaces(/* value */) {
  *   'A', 5  => 'AAAAA'
  *   'cat', 3 => 'catcatcat'
  */
-function repeatString(/* value, count */) {
-  throw new Error('Not implemented');
+function repeatString(value, count) {
+  return value.repeat(count);
 }
 
 /**
@@ -128,8 +128,8 @@ function repeatString(/* value, count */) {
  *   'I like legends', 'end' => 'I like legs',
  *   'ABABAB','BA' => 'ABAB'
  */
-function removeFirstOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+function removeFirstOccurrences(str, value) {
+  return str.replace(value, '');
 }
 
 /**
@@ -143,8 +143,9 @@ function removeFirstOccurrences(/* str, value */) {
  *   '<span>' => 'span'
  *   '<a>' => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  const r = /[><]/gi;
+  return str.replace(r, '');
 }
 
 
@@ -152,33 +153,33 @@ function unbracketTag(/* str */) {
  * Converts all characters of the specified string into the upper case
  *
  * @param {string} str
- * @return {string}
- *
- * @example
+    * @return {string}
+    *
+    * @example
  *   'Thunderstruck' => 'THUNDERSTRUCK'
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
- */
-function convertToUpperCase(/* str */) {
-  throw new Error('Not implemented');
+    */
+function convertToUpperCase(str) {
+  return str.toUpperCase();
 }
 
 /**
  * Extracts e-mails from single string with e-mails list delimeted by semicolons
  *
  * @param {string} str
- * @return {array}
- *
- * @example
- *   'angus.young@gmail.com;brian.johnson@hotmail.com;bon.scott@yahoo.com'
+    * @return {array}
+    *
+    * @example
+    *   'angus.young@gmail.com;brian.johnson@hotmail.com;bon.scott@yahoo.com'
  *   => [
- *      'angus.young@gmail.com',
- *      'brian.johnson@hotmail.com',
- *      'bon.scott@yahoo.com'
- *   ],
+    *      'angus.young@gmail.com',
+    *      'brian.johnson@hotmail.com',
+    *      'bon.scott@yahoo.com'
+    *   ],
  *   'info@gmail.com' => ['info@gmail.com']
- */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+    */
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -186,26 +187,38 @@ function extractEmails(/* str */) {
  * using pseudograhic chars
  *
  * @param {number} width
- * @param {number} height
- * @return {string}
- *
- * @example
- *
- *            '┌────┐\n'+
- *  (6,4) =>  '│    │\n'+
- *            '│    │\n'+
- *            '└────┘\n'
- *
- *  (2,2) =>  '┌┐\n'+
- *            '└┘\n'
- *
- *             '┌──────────┐\n'+
- *  (12,3) =>  '│          │\n'+
- *             '└──────────┘\n'
- *
- */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+    * @param {number} height
+    * @return {string}
+    *
+    * @example
+    *
+    *            '┌────┐\n'+
+ *  (6,4) =>     '│    │\n'+
+    *            '│    │\n'+
+    *            '└────┘\n'
+    *
+ *  (2,2) =>     '┌┐\n'+
+    *            '└┘\n'
+    *
+    *             '┌──────────┐\n'+
+ *  (12,3) =>     '│          │\n'+
+    *             '└──────────┘\n'
+    *
+    */
+function getRectangleString(width, height) {
+  const corner1 = '┌';
+  const corner2 = '┐';
+  const corner3 = '└';
+  const corner4 = '┘';
+  const gor = '─';
+  const ver = '│';
+  const newStr = '\n';
+  const probel = ' ';
+  const gorUp = corner1 + gor.repeat(width - 2) + corner2 + newStr;
+  const vertical = ver + probel.repeat(width - 2) + ver + newStr;
+  const gorDown = corner3 + gor.repeat(width - 2) + corner4 + newStr;
+
+  return gorUp + vertical.repeat(height - 2) + gorDown;
 }
 
 
@@ -214,36 +227,38 @@ function getRectangleString(/* width, height */) {
  * See details:  https://en.wikipedia.org/wiki/ROT13
  *
  * @param {string} str
- * @return {string}
- *
- * @example
- *
+    * @return {string}
+    *
+    * @example
+    *
  *   'hello' => 'uryyb'
  *   'Why did the chicken cross the road?' => 'Jul qvq gur puvpxra pebff gur ebnq?'
  *   'Gb trg gb gur bgure fvqr!' => 'To get to the other side!'
- *   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+    *   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
- *
- */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+    *
+    */
+function encodeToRot13(str) {
+  const originalAlpha = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const cipher = 'nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM';
+  return str.replace(/[a-z]/gi, (letter) => cipher[originalAlpha.indexOf(letter)]);
 }
 
 /**
  * Returns true if the value is string; otherwise false.
  * @param {string} value
- * @return {boolean}
- *
- * @example
+    * @return {boolean}
+    *
+    * @example
  *   isString() => false
  *   isString(null) => false
  *   isString([]) => false
- *   isString({}) => false
+    *   isString({ }) => false
  *   isString('test') => true
  *   isString(new String('test')) => true
- */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+    */
+function isString(x) {
+  return Object.prototype.toString.call(x) === '[object String]';
 }
 
 
@@ -261,18 +276,22 @@ function isString(/* value */) {
  * Function returns the zero-based index of specified card in the initial deck above.
  *
  * @param {string} value
- * @return {number}
- *
- * @example
+    * @return {number}
+    *
+    * @example
  *   'A♣' => 0
  *   '2♣' => 1
  *   '3♣' => 2
- *     ...
+    *     ...
  *   'Q♠' => 50
  *   'K♠' => 51
- */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+    */
+function getCardId(value) {
+  const a = ['A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
+  return a.indexOf(value);
 }
 
 
